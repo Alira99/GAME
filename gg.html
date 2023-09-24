@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Platform Game</title>
+		<style type="text/css">
+			body {
+				background: #111111;
+			}
+			canvas {
+				background: #555;
+				border: 1px solid black;
+				border-radius: 7px;
+				display: block;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<canvas id="myCanvas" height="500px" width="700px">
+			Your browser does not support the HTML5 canvas tag.
+		</canvas>
+	</body>
+
+	<script type="text/javascript">
+		window.onload = function() {
+			let c = document.getElementById("myCanvas");
+			let ctx = c.getContext("2d");
+
+			let controller = new Image();
+			controller.src = "pad.png";
+
+			controller.onload = function() {
+				let sx = 100;
+				let sy = 100;
+				let sWidth = 100;
+				let sHeight = 100;
+				let x = 0;
+				let y = 0;
+				let width = 150;
+				let height = 150;
+
+				ctx.drawImage(controller, sx * 0, sy * 0, sWidth, sHeight, x, c.height-(height+16), width, height);
+
+  				ctx.globalCompositeOperation = "source-in";
+  				ctx.fillStyle = "#FFF";
+  				ctx.fillRect(x, c.height-(height+16), width, height);
+  				ctx.globalCompositeOperation = "source-over";
+			}
+
+			let map = new Image();
+			map.src = "map0.png";
+
+			map.onload = function() {
+				let sx = 16;
+				let sy = 16;
+				let sWidth = 16;
+				let sHeight = 16;
+				let x = 0;
+				let y = 0;
+				let width = 16;
+				let height = 16;
+
+				for (let ceiling = 0; ceiling <= c.width/3.4; ceiling+=16) {
+					ctx.drawImage(map, sx * 4, sy * 0, sWidth, sHeight, x + (ceiling*1), y, width, height);
+				}
+
+				for (let ceiling = c.width/2.7; ceiling <= c.width; ceiling+=16) {
+					ctx.drawImage(map, sx * 4, sy * 0, sWidth, sHeight, x + (ceiling*1), y, width, height);
+				}
+
+
+				for (let floor = 0; floor <= c.width/1.7; floor+=16) {
+					ctx.drawImage(map, sx * 7, sy * 0, sWidth, sHeight, x + (floor*1), c.height-height, width, height);
+				}
+
+				for (let floor = c.width/1.5; floor <= c.width; floor+=16) {
+					ctx.drawImage(map, sx * 7, sy * 0, sWidth, sHeight, x + (floor*1), c.height-height, width, height);
+				}
+			}
+
+			let char = new Image();
+			char.src = "space3.png";
+
+			char.onload = function() {
+				let sx = 32;
+				let sy = 32;
+				let sWidth = 32;
+				let sHeight = 32;
+				let x = 0;
+				let y = 0;
+				let width = 32;
+				let height = 32;
+				let life = 0;
+
+				for (life = 0; life <= 3; life++) {
+					ctx.drawImage(char, sx * 0, sy * 3, sWidth, sHeight, x, y+16, width, height);
+					x += 32;
+				}
+
+				ctx.drawImage(char, sx * 0, sy * 3, sWidth, sHeight, c.width/3, c.height-(height+16), width, height);
+
+			}
+
+			let monster = new Image();
+			monster.src = "monster/bigmonster1.gif";
+
+			monster.onload = function() {
+				let sx = 40;
+				let sy = 40;
+				let sWidth = 80;
+				let sHeight = 80;
+				let x = 0;
+				let y = 0;
+				let width = 80;
+				let height = 80;
+
+				ctx.drawImage(monster, sx * 2, sy * 2, sWidth, sHeight, c.width - (width*1.5+5), c.height - (height+15), width, height);
+				ctx.drawImage(monster, sx * 0, sy * 0, sWidth, sHeight, c.width - (width*1.5+5), c.height - (height+15), width, height);
+			}
+		}
+	</script>
+</html>
